@@ -4,15 +4,27 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import QRCode from "qrcode";
 import { Link } from "react-router-dom";
+import { RiArrowGoBackFill } from "react-icons/ri";
+import { BsDownload } from "react-icons/bs";
+import { BsTrash } from "react-icons/bs";
+import { insertTitle } from "../api/qrcode";
 
-function Generate({ show, setShow }) {
+function Generate({ show, setShow, QrCode, setQrCode }) {
   const [url, setUrl] = useState("");
-  const [QrCode, setQrCode] = useState("");
+  const [newTitle, setNewTitle] = useState("");
+
+  // const newInput = () => {
+  //   if (newTitle) {
+  //     insertTitle({ title: newTitle });
+  //   }
+  // };
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const Generate = () => {
+    if (newTitle) {
+      insertTitle({ title: newTitle });
+    }
     QRCode.toDataURL(
       url,
       {
@@ -41,7 +53,15 @@ function Generate({ show, setShow }) {
                 controlId="exampleForm.ControlInput1"
               >
                 <Form.Label>QR Code Title</Form.Label>
-                <Form.Control type="title" placeholder="Title" autoFocus />
+                <Form.Control
+                  type="title"
+                  placeholder="Title"
+                  autoFocus
+                  onChange={e => {
+                    setNewTitle(e.target.value);
+                  }}
+                  value={newTitle}
+                />
               </Form.Group>
               <Form.Group
                 className="mb-3"
@@ -59,7 +79,7 @@ function Generate({ show, setShow }) {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={Generate}>
+            <Button variant="primary" onClick={e => Generate(e)}>
               Generate
             </Button>
             <Button variant="secondary" onClick={handleClose}>
@@ -68,21 +88,28 @@ function Generate({ show, setShow }) {
           </Modal.Footer>
         </Modal>
       )}
-
       {QrCode && (
         <>
-          <img src={QrCode} />
-          <div>
-            <Link to="/" className="return">
-              Return
-            </Link>
-
-            <a className="download" href={QrCode} download="paragon-qr-code">
-              Download
-            </a>
-
-            <a className="delete">Delete</a>
-          </div>
+          <Modal show={show}>
+            <Modal.Header>
+              <Modal.Title>Scan QR Code to access our location!</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {newTitle}
+              <img src={QrCode} alt="qr" />
+            </Modal.Body>
+            <div className="buttons">
+              <Link to="/" className="return">
+                <RiArrowGoBackFill />
+              </Link>
+              <a className="download" href={QrCode} download="paragon-qr-code">
+                <BsDownload />
+              </a>
+              <Link to="/delete-modal" className="delete">
+                <BsTrash />
+              </Link>
+            </div>
+          </Modal>
         </>
       )}
     </>

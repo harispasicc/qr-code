@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "react-bootstrap/Button";
 import { NavLink } from "react-router-dom";
+import { MdQrCodeScanner } from "react-icons/md";
 
 function Header({ handleShow, show, setShow }) {
   const toggleMenu = () => {
@@ -13,7 +14,8 @@ function Header({ handleShow, show, setShow }) {
     <nav className="navbar navbar-expand-lg bg-secondary">
       <div className="container-fluid">
         <a className="navbar-brand " href="/">
-          <i className="bi bi-qr-code-scan"></i>
+          <MdQrCodeScanner className="qr-logo" />
+          {/* <i className="bi bi-qr-code-scan"></i> */}
         </a>
         <button
           className="navbar-toggler collapsed"
@@ -33,7 +35,7 @@ function Header({ handleShow, show, setShow }) {
           }
           id="navbarSupportedContent"
         >
-          <ul className="navbar-nav  ">
+          <ul className="navbar-nav">
             <li className="nav-item ">
               <NavLink
                 to="/generate"
