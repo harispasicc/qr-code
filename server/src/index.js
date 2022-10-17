@@ -3,7 +3,7 @@ import config from "./config/config";
 import mongoose from "mongoose";
 
 app.listen(config.port, error => {
-  if (error) return console.log(error);
+  if (error) console.log(error);
   console.log(`Server is listening on port ${config.port}`);
 });
 

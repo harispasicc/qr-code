@@ -11,4 +11,4 @@ const QrSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("Qr-code", QrSchema);
+export default mongoose.model("Qrcode", QrSchema);
