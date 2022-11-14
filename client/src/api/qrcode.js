@@ -10,7 +10,7 @@ const headers = {
 
 const listQr = async () => {
   try {
-    const res = await axios.get(apiUrl + "/api/qrcode");
+    const res = await axios.get(apiUrl + "/qrcode");
     console.log(res);
   } catch (error) {
     console.log(error);
@@ -19,7 +19,7 @@ const listQr = async () => {
 
 const insertTitle = title => {
   try {
-    return axios.post(apiUrl + "/api/qrcode", title);
+    return axios.post(apiUrl + "/qrcode", title);
   } catch (error) {
     console.log(error);
   }
@@ -27,7 +27,7 @@ const insertTitle = title => {
 
 const remove = async id => {
   try {
-    const res = await axios.delete(apiUrl + `/api/qrcode/${id}`);
+    const res = await axios.delete(apiUrl + `/qrcode/${id}`);
     console.log(res.data);
   } catch (error) {
     console.log(error);

@@ -15,7 +15,6 @@ function Header({ handleShow, show, setShow }) {
       <div className="container-fluid">
         <a className="navbar-brand " href="/">
           <MdQrCodeScanner className="qr-logo" />
-          {/* <i className="bi bi-qr-code-scan"></i> */}
         </a>
         <button
           className="navbar-toggler collapsed"

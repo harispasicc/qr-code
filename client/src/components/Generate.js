@@ -13,30 +13,25 @@ function Generate({ show, setShow, QrCode, setQrCode }) {
   const [url, setUrl] = useState("");
   const [newTitle, setNewTitle] = useState("");
 
-  // const newInput = () => {
-  //   if (newTitle) {
-  //     insertTitle({ title: newTitle });
-  //   }
-  // };
-
   const handleClose = () => setShow(false);
 
   const Generate = () => {
     if (newTitle) {
-      insertTitle({ title: newTitle });
+      insertTitle({ title: newTitle, url: url });
+
+      QRCode.toDataURL(
+        url,
+        {
+          width: 800,
+          margin: 2,
+          color: { dark: "#000000ff", light: "#ffffffff" },
+        },
+        (err, url) => {
+          if (err) return console.log(err);
+          setQrCode(url);
+        }
+      );
     }
-    QRCode.toDataURL(
-      url,
-      {
-        width: 800,
-        margin: 2,
-        color: { dark: "#000000ff", light: "#ffffffff" },
-      },
-      (err, url) => {
-        if (err) return console.log(err);
-        setQrCode(url);
-      }
-    );
   };
 
   return (
@@ -95,7 +90,8 @@ function Generate({ show, setShow, QrCode, setQrCode }) {
               <Modal.Title>Scan QR Code to access our location!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              {newTitle}
+              <div className="generate-title">{newTitle}</div>
+
               <img src={QrCode} alt="qr" />
             </Modal.Body>
             <div className="buttons">
@@ -105,8 +101,8 @@ function Generate({ show, setShow, QrCode, setQrCode }) {
               <a className="download" href={QrCode} download="paragon-qr-code">
                 <BsDownload />
               </a>
-              <Link to="/delete-modal" className="delete">
-                <BsTrash />
+              <Link to="/">
+                <BsTrash className="delete" />
               </Link>
             </div>
           </Modal>
