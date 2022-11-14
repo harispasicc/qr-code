@@ -1,8 +1,18 @@
 import _ from "lodash";
-import Qrcode from "../models/Qcode.model";
+import Qcode from "../models/Qcode.model";
+
+const home = (req, res) => {
+  Qcode.find((err, data) => {
+    if (err) {
+      return res.status(400).json(err.message);
+    }
+
+    res.status(200).json(data);
+  });
+};
 
 const create = (req, res) => {
-  const qr = Qrcode(req.body);
+  const qr = Qcode(req.body);
   qr.save((err, data) => {
     if (err) {
       return res.status(400).json(err.message);
@@ -12,7 +22,7 @@ const create = (req, res) => {
 };
 
 const list = (req, res) => {
-  Qrcode.find((err, data) => {
+  Qcode.find((err, data) => {
     if (err) {
       return res.status(400).json(err.message);
     }
@@ -21,9 +31,19 @@ const list = (req, res) => {
   });
 };
 
+const getQrCode = (req, res) => {
+  const id = req.params.id;
+  Qcode.findById(id).exec((err, data) => {
+    if (err) {
+      return res.status(400).json(err.message);
+    }
+    res.status(200).json(data);
+  });
+};
+
 const remove = (req, res) => {
   const id = req.params.id;
-  Qrcode.findById(id).exec((err, data) => {
+  Qcode.findById(id).exec((err, data) => {
     if (err || !data) {
       return res.status(400).json("Qr-code not found!");
     }
@@ -36,4 +56,4 @@ const remove = (req, res) => {
   });
 };
 
-export default { list, create, remove };
+export default { list, remove, create, getQrCode, home };

@@ -1,6 +1,11 @@
 require("dotenv").config();
 
 module.exports = {
-  mongo: process.env.DB || "mongo://localhost:27017/qr-code",
-  port: process.env.PORT || 5000,
+  mongo: process.env.DB,
+  port: process.env.PORT,
 };
+
+// export default {
+//   port: 5000,
+//   mongo: "mongodb://localhost:27017/qrcode",
+// };

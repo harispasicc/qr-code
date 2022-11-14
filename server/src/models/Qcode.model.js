@@ -1,3 +1,4 @@
+import { uniqueId } from "lodash";
 import mongoose from "mongoose";
 
 const QrSchema = new mongoose.Schema({
@@ -7,7 +8,7 @@ const QrSchema = new mongoose.Schema({
   },
   url: {
     type: String,
-    required: true,
+    required: uniqueId,
   },
 });
 

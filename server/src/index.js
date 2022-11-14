@@ -2,11 +2,6 @@ import app from "./app";
 import config from "./config/config";
 import mongoose from "mongoose";
 
-app.listen(config.port, error => {
-  if (error) console.log(error);
-  console.log(`Server is listening on port ${config.port}`);
-});
-
 mongoose
   .connect(config.mongo, {
     useUnifiedTopology: true,
@@ -14,3 +9,8 @@ mongoose
   })
   .then(() => console.log("Database connected"))
   .catch(() => console.log("Error connecting to database"));
+
+app.listen(config.port, error => {
+  if (error) console.log(error);
+  console.log(`Server is listening on port ${config.port}`);
+});
