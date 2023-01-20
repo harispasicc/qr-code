@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
@@ -8,12 +8,31 @@ import { RiArrowGoBackFill } from "react-icons/ri";
 import { BsDownload } from "react-icons/bs";
 import { BsTrash } from "react-icons/bs";
 import { insertTitle } from "../api/qrcode";
+import { useNavigate } from "react-router-dom";
+import { remove } from "../api/qrcode";
+import { Context } from "../contexts/Context";
+import QrCodeModal from "./QrCodeModal";
 
-function Generate({ show, setShow, QrCode, setQrCode }) {
-  const [url, setUrl] = useState("");
-  const [newTitle, setNewTitle] = useState("");
+function Generate() {
+  const {
+    show,
+    setShow,
+    QrCode,
+    setQrCode,
+    newTitle,
+    setNewTitle,
+    url,
+    setUrl,
+    id,
+  } = useContext(Context);
 
-  const handleClose = () => setShow(false);
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    setQrCode(null);
+
+    navigate("/");
+  };
 
   const Generate = () => {
     if (newTitle) {
@@ -32,6 +51,11 @@ function Generate({ show, setShow, QrCode, setQrCode }) {
         }
       );
     }
+  };
+
+  const handleDelete = () => {
+    remove(id);
+    navigate("/");
   };
 
   return (
@@ -91,7 +115,6 @@ function Generate({ show, setShow, QrCode, setQrCode }) {
             </Modal.Header>
             <Modal.Body>
               <div className="generate-title">{newTitle}</div>
-
               <img src={QrCode} alt="qr" />
             </Modal.Body>
             <div className="buttons">
@@ -101,9 +124,7 @@ function Generate({ show, setShow, QrCode, setQrCode }) {
               <a className="download" href={QrCode} download="paragon-qr-code">
                 <BsDownload />
               </a>
-              <Link to="/">
-                <BsTrash className="delete" />
-              </Link>
+              <BsTrash className="delete" onClick={handleDelete} />
             </div>
           </Modal>
         </>

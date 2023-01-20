@@ -1,53 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { GrAlert } from "react-icons/gr";
+import ValidationMessage from "./ValidationMessage";
 import { remove } from "../api/qrcode";
 import axios from "axios";
 
-function DeleteModal({ show, setShow }) {
-  const [qrcodes, setQrCodes] = useState([]);
+function DeleteModal({ setShowModal, showModal, title, id }) {
+  const [validation, setValidation] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleDelete = async () => {
+    await remove(id);
+    setShowModal(false);
 
-  useEffect(() => {
-    const remove = async id => {
-      try {
-        const res = await axios.delete(`http://localhost:5000/qrcode/${id}`);
-        setQrCodes(res.data);
-        console.log(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    remove();
-  }, [qrcodes]);
+    setTimeout(() => {
+      setValidation(true);
+    }, 1000);
+  };
+
+  const remove = async id => {
+    try {
+      const res = await axios.delete(`http://localhost:4000/qrcode/${id}`);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
-      {qrcodes.map((qr, index) => (
-        <Modal show={show} key={index}>
-          <Modal.Header>
-            <Modal.Title>Delete!</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <GrAlert className="alert-icon" /> Are you sure?
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="primary"
-              onClick={() => {
-                remove(qr._id);
-              }}
-            >
-              Ok
-            </Button>
-            <Button variant="secondary" onClick={handleClose()}>
-              Cancel
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      ))}
+      <Modal show={true}>
+        <Modal.Header>
+          <Modal.Title>Delete!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <GrAlert className="alert-icon" /> Are you sure?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleDelete}>
+            Ok
+          </Button>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {validation && <ValidationMessage title={title} />}
     </div>
   );
 }
