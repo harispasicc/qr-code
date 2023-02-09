@@ -1,12 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { NavLink } from "react-router-dom";
 import { MdQrCodeScanner } from "react-icons/md";
-import axios from "axios";
 import { Context } from "../contexts/Context";
 
 function Header({ handleShow }) {
-  const { show, setShow, Qrcode, setQrCode } = useContext(Context);
+  const { show, setShow, qrcodes, setSearchActive, setFilteredSearch } =
+    useContext(Context);
 
   const [searchTerm, setSearchTerm] = useState("");
   const toggleMenu = () => {
@@ -15,27 +15,21 @@ function Header({ handleShow }) {
 
   const showDropdown = show ? "show" : "";
 
-  const handleSearch = event => {
-    setSearchTerm(event.target.value);
+  useEffect(() => {
+    handleSearch();
+  }, [searchTerm]);
+
+  const filteredItems = qrcodes.filter(item =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const handleSearch = () => {
+    if (searchTerm !== "") {
+      setSearchActive(true);
+    } else {
+      setSearchActive(false);
+    }
+    setFilteredSearch(filteredItems);
   };
-
-  // const filteredItems = Qrcode.filter(QrCodes =>
-  //   QrCodes.title.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
-
-  // const filterContent = (QrCode, searchTerm) => {
-  //   const result = QrCode.filter(QrCode => QrCode.title.includes(searchTerm));
-  //   setQrCode(result);
-  // };
-
-  // const handleSearch = e => {
-  //   const searchTerm = e.target.value;
-  //   axios.get("http://localhost:4000/qrcode").then(res => {
-  //     if (res.data.success) {
-  //       filterContent(res.data.QrCode, searchTerm);
-  //     }
-  //   });
-  // };
 
   return (
     <nav className="navbar navbar-expand-lg bg-secondary">
@@ -84,21 +78,11 @@ function Header({ handleShow }) {
               type="search"
               placeholder="Search"
               aria-label="Search"
-              onChange={handleSearch}
+              onChange={e => {
+                setSearchTerm(e.target.value);
+              }}
             />
-            {/* <button
-              className="btn btn-primary"
-              style={{ color: "white" }}
-              type="submit"
-            >
-              Search
-            </button> */}
           </form>
-          {/* <ul>
-            {filteredItems.map(item => (
-              <li key={item.id}>{item.title}</li>
-            ))}
-          </ul> */}
         </div>
       </div>
     </nav>

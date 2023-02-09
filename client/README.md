@@ -1,3 +1,49 @@
+QR-Code Generator
+
+Product Perspective
+The OR code is an abbreviation of "Quick Response Code" It is a type of square-shaped barcode which is readable by machines to unlock the information that is contained inside. it was invented in 1994 oy a Japanese company called Denso Wave, and has since been used across the world in many applications QR Codes do not require a heavyset machine scanner to scan them because they are quickly accessible through the camera of a mobile phone or any OR Code reader app It is possible to scan a QR Code by opening your smartphone camera feature or downloading a QR Code reader. Hold the smartphone steady for 2-4 seconds towards the QR Code you want to scan and click on the notification to access the content of the QR Code.
+
+For cloning you should use cd to go to your folder, than git clone and paste your url link copied from github. After cloning the project you need to go to the project with cd and write code .
+
+After VSC opens, go to your folder and npx create-react-app .
+Now you will be ready to work on your project.
+
+mobile-qr-code-screenshot:
+
+![](screenshots/mobile1.PNG)
+
+![](screenshots/mobile2.PNG)
+
+![](screenshots/mobile3.PNG)
+
+![](screenshots/mobile4.PNG)
+
+![](screenshots/mobile5.PNG)
+
+tablet-qr-code-screenshot:
+
+![](screenshots/tablet1.PNG)
+
+![](screenshots/tablet2.PNG)
+
+![](screenshots/tablet3.PNG)
+
+![](screenshots/tablet4.PNG)
+
+![](screenshots/tablet5.PNG)
+
+desktop-qr-code-screenshot:
+
+![](screenshots/desktop1.PNG)
+
+![](screenshots/desktop2.PNG)
+
+![](screenshots/desktop3.PNG)
+
+![](screenshots/desktop4.PNG)
+
+![](screenshots/desktop5.PNG)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

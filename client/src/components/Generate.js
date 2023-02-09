@@ -11,7 +11,6 @@ import { insertTitle } from "../api/qrcode";
 import { useNavigate } from "react-router-dom";
 import { remove } from "../api/qrcode";
 import { Context } from "../contexts/Context";
-import QrCodeModal from "./QrCodeModal";
 
 function Generate() {
   const {
@@ -23,14 +22,16 @@ function Generate() {
     setNewTitle,
     url,
     setUrl,
-    id,
+    findLastEl,
   } = useContext(Context);
 
   const navigate = useNavigate();
 
-  const handleClose = () => {
-    setQrCode(null);
-
+  const handleClose = async () => {
+    await setShow("");
+    setUrl("");
+    setQrCode("");
+    setNewTitle("");
     navigate("/");
   };
 
@@ -53,8 +54,8 @@ function Generate() {
     }
   };
 
-  const handleDelete = () => {
-    remove(id);
+  const handleDelete = async () => {
+    await remove(findLastEl._id);
     navigate("/");
   };
 
@@ -118,8 +119,8 @@ function Generate() {
               <img src={QrCode} alt="qr" />
             </Modal.Body>
             <div className="buttons">
-              <Link to="/" className="return">
-                <RiArrowGoBackFill />
+              <Link className="return">
+                <RiArrowGoBackFill onClick={handleClose} />
               </Link>
               <a className="download" href={QrCode} download="paragon-qr-code">
                 <BsDownload />

@@ -13,6 +13,13 @@ function App() {
   const [newTitle, setNewTitle] = useState("");
   const [url, setUrl] = useState("");
   const [qrcodes, setQrCodes] = useState([]);
+  const [searchActive, setSearchActive] = useState(false);
+  const [filteredSearch, setFilteredSearch] = useState([]);
+  const [findLastEl, setFindLastEl] = useState();
+  const [id, setId] = useState();
+  const [validation, setValidation] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [qrModal, setQrModal] = useState(false);
 
   const handleShow = () => setShow(true);
 
@@ -29,6 +36,20 @@ function App() {
         setUrl,
         qrcodes,
         setQrCodes,
+        searchActive,
+        setSearchActive,
+        filteredSearch,
+        setFilteredSearch,
+        findLastEl,
+        setFindLastEl,
+        id,
+        setId,
+        validation,
+        setValidation,
+        showModal,
+        setShowModal,
+        qrModal,
+        setQrModal,
       }}
     >
       <BrowserRouter>
@@ -39,7 +60,7 @@ function App() {
           <Route path="/show" element={<Show />} />
         </Routes>
         <Footer />
-      </BrowserRouter>{" "}
+      </BrowserRouter>
     </Context.Provider>
   );
 }

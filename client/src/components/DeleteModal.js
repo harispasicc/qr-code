@@ -1,32 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { GrAlert } from "react-icons/gr";
-import ValidationMessage from "./ValidationMessage";
-import { remove } from "../api/qrcode";
-import axios from "axios";
 
-function DeleteModal({ setShowModal, showModal, title, id }) {
-  const [validation, setValidation] = useState(false);
-
-  const handleDelete = async () => {
-    await remove(id);
-    setShowModal(false);
-
-    setTimeout(() => {
-      setValidation(true);
-    }, 1000);
-  };
-
-  const remove = async id => {
-    try {
-      const res = await axios.delete(`http://localhost:4000/qrcode/${id}`);
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+function DeleteModal({ setShowModal, handleDelete }) {
   return (
     <div>
       <Modal show={true}>
@@ -45,7 +22,6 @@ function DeleteModal({ setShowModal, showModal, title, id }) {
           </Button>
         </Modal.Footer>
       </Modal>
-      {validation && <ValidationMessage title={title} />}
     </div>
   );
 }
